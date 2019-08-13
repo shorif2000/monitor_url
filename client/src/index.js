@@ -5,13 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore'
-//import { applyMiddleware, createStore, compose } from 'redux';
-//import thunkMiddleware from 'redux-thunk';
-//import rootReducer from './reducer/rootReducer';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import rootReducer from './reducer/rootReducer';
 
-//const configureStore = createStore(rootReducer, compose(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, compose(applyMiddleware(thunkMiddleware)));
 //const configureStore = createStore(rootReducer);
-const store = configureStore();
+//const store = configureStore();
 
 const renderApp = () =>
   render(
