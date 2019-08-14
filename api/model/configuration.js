@@ -1,7 +1,6 @@
 var sql = require("../lib/db.js");
 
 var Configuration = function(configuration) {
-  console.log(this)
   this.configuration = configuration.configuration;
   this.url = configuration.url;
   this.interval = configuration.interval;

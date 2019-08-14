@@ -3,8 +3,6 @@ var router = express.Router();
 
 var actions = require('../controller/appController');
 
-router.get('/', actions.list_all_config); 
-
-router.get('/:id',  actions.read_a_config); 
+router.get('/:url',  actions.check_status); 
 
 module.exports = router;
