@@ -1,30 +1,27 @@
 import React from 'react';
 import { render } from 'react-dom'
 import './index.css';
+import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore'
-import { applyMiddleware, createStore, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import rootReducer from './reducer/rootReducer';
+import "bootstrap/dist/css/bootstrap.css";
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunkMiddleware)));
-//const configureStore = createStore(rootReducer);
-//const store = configureStore();
+const store = configureStore();
 
 const renderApp = () =>
   render(
-	<Provider store={store}>
-		<App />
-	</Provider>, 
-	document.getElementById('root')
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>,
+    document.getElementById("root")
   );
 
-
-
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-  module.hot.accept('./App', renderApp)
+if (process.env.NODE_ENV !== "production" && module.hot) {
+  module.hot.accept("./App", renderApp);
 }
 
 renderApp();

@@ -1,31 +1,34 @@
-import React, { Component } from 'react';
-import './App.css';
-import Configuration from './components/Configuration';
+import React, { Component } from "react";
+import { Switch, Route, withRouter } from "react-router-dom";
+import ErrorBoundary from "./errorboundary";
+import "./App.css";
+import Configuration from "./components/Configuration";
 
 class App extends Component {
-
-constructor(props) {
-    super(props);
-    this.state = { apiResponse: "" };
-} 
-
-  callAPI() {
-    fetch("http://www.banglarelief.org:9010/")
-        .then(res => res.text())
-        .then(res => this.setState({ apiResponse: res }));
+  render() {
+    return (
+      <div className="App">
+        <ErrorBoundary>
+          <Switch>
+            <Route
+              path="/health/:id"
+              render={match => (
+                <Configuration matches={match} {...this.props} />
+              )}
+            />
+            <Route
+              exact
+              path="/"
+              render={match => (
+                <Configuration matches={match} {...this.props} />
+              )}
+            />
+          </Switch>
+        </ErrorBoundary>
+      </div>
+    );
+  }
 }
 
-componentDidMount() {
-    this.callAPI();
-}
-render(){
-  return (
-    <div className="App">
-	<Configuration url={`/`} />
- <p className="App-intro">;{this.state.apiResponse}</p>
-    </div>
-  );
-}
-}
+export default withRouter(App);
 
-export default App;
