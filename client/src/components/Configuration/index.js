@@ -21,18 +21,21 @@ export class Configuration extends Component {
         }
       }
     } = this.props;
-
-    const items = data[_.mapKeys(groups, "id")[id].name];
-    return items.map((k, v) => {
-      return (
-        <div className="col-xs-12 col-md-3">
-          <div>
-            <TrafficLightContainer url={k.url} duration={k.interval_check} />
+    
+    if(groups !== undefined && Object.keys(groups).length > 0){
+      const items = data[_.mapKeys(groups, "id")[id].name];
+      return items.map((k, v) => {
+        return (
+          <div className="col-xs-12 col-md-3">
+            <div>
+              <TrafficLightContainer url={k.url} duration={k.interval_check} />
+            </div>
+            <div>{k.url}</div>
           </div>
-          <div>{k.url}</div>
-        </div>
-      );
-    });
+        );
+      });
+    }
+    return '';
   }
 
   renderTrafficList(demos) {
@@ -53,29 +56,41 @@ export class Configuration extends Component {
     const {
       config: { groups }
     } = this.props;
-    return Object.keys(data).map((value, key) => {
-      const demos = data[value];
-      const group = _.mapKeys(groups, "name")[value];
-      return (
-        <div className="top-buffer" key={group.id + value + key}>
-          <h4>
-            <Link to={`/health/${group.id}`}>{value}</Link>
-          </h4>
-          {this.renderTrafficList(demos)}
-        </div>
-      );
-    });
+
+    if(groups !== undefined && Object.keys(groups).length > 0){
+      return Object.keys(data).map((value, key) => {
+        const demos = data[value];
+        const group = _.mapKeys(groups, "name")[value];
+        return (
+          <div className="col-xs-12 col-md-6 col-lg-3 text-left" key={group.id + value + key}>
+            <h4>
+              <Link to={`/health/${group.id}`}>{value}</Link>
+            </h4>
+            {this.renderTrafficList(demos)}
+          </div>
+        );
+      });
+    }
+    return '';
   }
 
   render() {
     const {
-      config: { data, groups },
+      config: { data, groups, error },
       matches: {
         match: {
           params: { id }
         }
       }
     } = this.props;
+
+    if(
+      error !== undefined &&
+      Object.keys(error).length > 0 
+    ) {
+	console.log(error);
+	alert(error.message);    
+    }
 
     if (
       id !== undefined &&

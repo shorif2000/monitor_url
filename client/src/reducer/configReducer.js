@@ -1,10 +1,11 @@
 import _ from "lodash";
-import { FETCH_GROUPS, LOAD_CONFIG } from "../actions/config";
+import { FETCH_GROUPS, LOAD_CONFIG, ERROR } from "../actions/config";
 
 export default function reducer(
   state = {
     data: [],
-    groups: []
+    groups: [],
+    error: []
   },
   action
 ) {
@@ -26,6 +27,11 @@ export default function reducer(
     case FETCH_GROUPS: {
       return Object.assign({}, state, {
         groups: action.payload
+      });
+    }
+    case ERROR: {
+      return Object.assign({}, state, {
+        error: action.payload
       });
     }
     default: {

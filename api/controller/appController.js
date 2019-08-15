@@ -1,11 +1,17 @@
 var Configuration = require("../model/configuration");
+var Groups = require("../model/groups.js");
 var HealthCheck = require("../model/healthcheck");
 
 exports.list_all_config = (req, res) => {
-  Configuration.getAllConfig((err, configuration) => {
+   Configuration.getAllConfig((err, configuration) => {
     if (err) res.json(err);
     else
       res.json(configuration);
+  });
+  Groups.getAllGroups((err, group) => {
+    if (err) res.json(err);
+    else
+      res.json(group);
   });
 };
 
@@ -14,6 +20,14 @@ exports.read_a_config = (req, res) => {
     if (err) res.json(err);
     else
       res.json(configuration);
+  });
+};
+
+exports.list_all_groups = (req, res) => {
+  Groups.getAllGroups((err, group) => {
+    if (err) res.json(err);
+    else
+      res.json(group);
   });
 };
 

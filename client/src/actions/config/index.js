@@ -1,23 +1,31 @@
 import axios from "axios";
-import configJson from "./config";
-import groupsJson from "./groupsJson";
 
 export const LOAD_CONFIG = "LOAD_CONFIG";
 
 export function loadConfig() {
   return async function(dispatch) {
-    const request = configJson;
-    /*const request = await axios
- *       .get(url)
- *             .then(response => {
- *                     return response.status;
- *                           })
- *                                 .catch(error => {
- *                                         console.log("Looks like there was a problem: \n", error);
- *                                               });
- *                                                   */
+    const request = await axios
+      .get(`http://www.banglarelief.org:9010/config`)
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.log("Looks like there was a problem: \n", error);
+	if (!error.status) {
+          // network error
+          return {error: true, message: 'Could not load config data'};
+        }
+	return {error: true, message: 'Looks like there was a problem'};
+      });
+
+    let type = LOAD_CONFIG;
+    if(request.error){
+      console.log("send diff type");
+      type = 'ERROR';
+    }
+                                                    
     dispatch({
-      type: LOAD_CONFIG,
+      type,
       payload: request
     });
   };
@@ -25,22 +33,34 @@ export function loadConfig() {
 
 export const FETCH_GROUPS = "FETCH_GROUPS";
 
-export function fetchGroups(url) {
+export function fetchGroups() {
   return async function(dispatch) {
-    const request = groupsJson;
-    /*const request = await axios
- *       .get(url)
- *             .then(response => {
- *                     return response.status;
- *                           })
- *                                 .catch(error => {
- *                                         console.log("Looks like there was a problem: \n", error);
- *                                               });
- *                                                   */
+    const request = await axios
+      .get(`http://www.banglarelief.org:9010/groups`)
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.log("Looks like there was a problem: \n", error);
+	if (!error.status) {
+          // network error
+          return {error: true, message: 'Could not load group data'};
+        }          
+	return [{error: true, message: 'Looks like there was a problem'}]; 
+    });
+                                 
+    let type = FETCH_GROUPS;
+    if(request.error){
+      console.log("send diff type");
+      type = 'ERROR';
+    }
+                   
     dispatch({
-      type: FETCH_GROUPS,
+      type,
       payload: request
     });
   };
 }
 
+
+export const ERROR = "ERROR";
