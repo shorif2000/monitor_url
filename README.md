@@ -13,11 +13,11 @@ Clone reository
 
 Start backend api
 
-`cd CLONED\api; npm i; nodemon --exec npm start`
+`cd CLONED/api; npm i; nodemon --exec npm start`
 
 Start front end client
 
-`cd CLONED\client; npmi;`
+`cd CLONED/client; npmi;`
 
 Update ip address from `52.56.180.211` to appropiate
 
@@ -28,7 +28,7 @@ Update ip address from `52.56.180.211` to appropiate
 
 Some basic tests added on api
 
-`cd CLONED\api; npm test;`
+`cd CLONED/api; npm test;`
 
 #Demo 
 
