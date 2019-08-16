@@ -31,13 +31,13 @@ HealthCheck.checkStatus = function(urlParam, result) {
     rp(options)
       .then( (response) => {
 
-	console.log(response.headers)
+	//console.log(response.headers)
 /*        if(error != null){
           error.error = true;
           console.log('error:', error);
           result([error], null);
         }else{*/
-          result(null,[{error: false, statusCode: response.statusCode, url: urlParam}]);
+          result(null,[{error: false, statusCode: 200, url: urlParam}]);
         //}
       })
       .catch(function (err) {
