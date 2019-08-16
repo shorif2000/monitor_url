@@ -9,6 +9,7 @@ var cors = require("cors");
 var bodyParser = require('body-parser');
 var helmet = require('helmet');
 var express = require('express');
+var expressCurl = require('express-curl');
 
 var indexRouter = require('./routes/index');
 
@@ -17,6 +18,7 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+app.use(expressCurl);
 app.use(logger('dev'));
 app.use(helmet());
 app.disable('x-powered-by');

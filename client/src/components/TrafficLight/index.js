@@ -24,7 +24,6 @@ class TrafficLight extends Component {
   }
   componentDidMount() {
     this.interval = setInterval(() => {
-      console.log("interval");
       this.flashing();
     }, 1000);
   }
