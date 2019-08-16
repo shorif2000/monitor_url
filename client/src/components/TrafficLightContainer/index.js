@@ -46,7 +46,7 @@ class TrafficLightContainer extends Component {
     const {
       status: { data }
     } = nextProps;
-    const { start, time, redCounter, intervals, flash } = prevState;
+    const { start, time, redCounter, intervals } = prevState;
 
     if (data.interval !== undefined && data.interval !== intervals) {
       let flashing = false;

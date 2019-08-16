@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { FETCH_GROUPS, LOAD_CONFIG, ERROR } from "../actions/config";
 
 export default function reducer(

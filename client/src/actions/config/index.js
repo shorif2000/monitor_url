@@ -5,7 +5,7 @@ export const LOAD_CONFIG = "LOAD_CONFIG";
 export function loadConfig() {
   return async function(dispatch) {
     const request = await axios
-      .get(`http://www.banglarelief.org:9010/config`)
+      .get( `http://52.56.180.211:9010/config`)
       .then(response => {
         return response.data;
       })
@@ -36,7 +36,7 @@ export const FETCH_GROUPS = "FETCH_GROUPS";
 export function fetchGroups() {
   return async function(dispatch) {
     const request = await axios
-      .get(`http://www.banglarelief.org:9010/groups`)
+      .get(`http://52.56.180.211:9010/groups`)
       .then(response => {
         return response.data;
       })

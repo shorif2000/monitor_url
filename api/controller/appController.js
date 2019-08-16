@@ -8,11 +8,6 @@ exports.list_all_config = (req, res) => {
     else
       res.json(configuration);
   });
-  Groups.getAllGroups((err, group) => {
-    if (err) res.json(err);
-    else
-      res.json(group);
-  });
 };
 
 exports.read_a_config = (req, res) => {
