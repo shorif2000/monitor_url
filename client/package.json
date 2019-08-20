@@ -1,5 +1,6 @@
 {
   "name": "newsnow",
+  "homepage": "http://52.56.180.211:3000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
