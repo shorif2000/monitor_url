@@ -26,6 +26,7 @@ class TrafficLightContainer extends Component {
     this.setState({ start: Date.now() });
 
     this.dataPolling = setInterval(() => {
+      console.log("dataPolling" + url)
       const { intervals } = this.state;
       this.props.loadUrlStatus(url, intervals);
       this.setState({ intervals: intervals + 1 });
@@ -60,7 +61,7 @@ class TrafficLightContainer extends Component {
         };
       } else if (data.statusCode !== 200) {
         if (redCounter >= 3) {
-          if ((time - start) / 1000 > 5) {
+          if ((time - start) / 1000 > 120) {
             flashing = true;
           }
           return {

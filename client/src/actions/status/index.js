@@ -9,6 +9,7 @@ export function loadUrlStatus(url, interval) {
     const request = await axios
       .get(checkUrl)
       .then(response => {
+console.log(response)
 	response.data[0].interval = interval+1;
 console.log('status response: ' , response.data[0])
         return response.data[0];

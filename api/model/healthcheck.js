@@ -1,5 +1,4 @@
-var request = require('request');
-var rp = require('request-promise');
+var axios = require("axios");
 var url = require("url");
 
 var HealthCheck = function(health) {
@@ -9,43 +8,38 @@ var HealthCheck = function(health) {
 };
 
 HealthCheck.checkStatus = function(urlParam, result) {
-  var valid = url.parse('http://'+urlParam);
-  if(valid != null){
-    console.log('http://'+urlParam)
-    var _include_headers = function(body, response, resolveWithFullResponse) {
-      return {'headers': response.headers, 'data': body};
-    };
-    const options = {
-      url: `http://${urlParam}`,
-      followAllRedirects: true,
-      method: 'get',
-      gzip: true,
-      transform: _include_headers,
-      transform2xxOnly: true,
-      resolveWithFullResponse: true,
-/*      headers: {
-        'User-Agent': userAgent
-      },*/
-    };
-    
-    rp(options)
-      .then( (response) => {
-
-	//console.log(response.headers)
-/*        if(error != null){
-          error.error = true;
-          console.log('error:', error);
-          result([error], null);
-        }else{*/
-          result(null,[{error: false, statusCode: 200, url: urlParam}]);
-        //}
-      })
-      .catch(function (err) {
-        console.log(err)
-	result([{error:true,message: err.message}], null);
-      });
-  }else{
-    result([{error:true,message: 'Invalid URI'}], null);
+  var valid = url.parse("http://" + urlParam);
+  if (valid != null) {
+    console.log("http://" + urlParam);
+    try {
+      axios
+        .get("http://" + urlParam)
+        .then(response => {
+console.log(response)
+          if (response.isAxiosError) {
+            result([{ error: true, message: "Unknown error" }], null);
+          }
+          
+          console.log("success");
+          result(null, [{ error: false, statusCode: response.status}]);
+        })
+        .catch(error => {
+          console.log("error");
+          result([{ error: true, message: error.message }], null);
+        });
+    } catch (error) {
+      console.error("getStatus" + error.message);
+      result(
+        {
+          error: true,
+          message: error.message,
+          statusCode: error.statusCode && error.statusCode
+        },
+        null
+      );
+    }
+  } else {
+    result([{ error: true, message: "Invalid URI" }], null);
   }
 };
 

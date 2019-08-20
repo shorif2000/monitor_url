@@ -25,8 +25,9 @@ export class Configuration extends Component {
     if(groups !== undefined && Object.keys(groups).length > 0){
       const items = data[_.mapKeys(groups, "id")[id].name];
       return items.map((k, v) => {
+	console.log(k.url)
         return (
-          <div className="col-xs-12 col-md-3">
+          <div className="col-xs-12 col-md-3" key={k.url+k.interval_check}>
             <div>
               <TrafficLightContainer url={k.url} duration={k.interval_check} />
             </div>
