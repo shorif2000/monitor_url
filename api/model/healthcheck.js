@@ -15,11 +15,10 @@ HealthCheck.checkStatus = function(urlParam, result) {
       axios
         .get("http://" + urlParam)
         .then(response => {
-console.log(response)
           if (response.isAxiosError) {
             result([{ error: true, message: "Unknown error" }], null);
           }
-          
+          //result([{ error: true, message: error.message }], null); 
           console.log("success");
           result(null, [{ error: false, statusCode: response.status}]);
         })

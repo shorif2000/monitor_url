@@ -90,7 +90,7 @@ export class Configuration extends Component {
       Object.keys(error).length > 0 
     ) {
 	console.log(error);
-	alert(error.message);    
+	//alert(error.message);    
     }
 
     if (

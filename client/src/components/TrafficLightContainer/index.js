@@ -15,7 +15,8 @@ class TrafficLightContainer extends Component {
       time: 0,
       start: 0,
       intervals: 0,
-      flash: false
+      flash: false,
+      url: ""
     };
     this.interval = null;
     this.dataPolling = null;
@@ -26,10 +27,11 @@ class TrafficLightContainer extends Component {
     this.setState({ start: Date.now() });
 
     this.dataPolling = setInterval(() => {
-      console.log("dataPolling" + url)
-      const { intervals } = this.state;
-      this.props.loadUrlStatus(url, intervals);
-      this.setState({ intervals: intervals + 1 });
+      const { intervals, disable } = this.state;
+      if(!disable){           
+        this.props.loadUrlStatus(url, intervals);
+        this.setState({ intervals: intervals + 1, url });
+      }
     }, parseInt(duration) * 1000);
 
     this.interval = setInterval(
@@ -45,38 +47,50 @@ class TrafficLightContainer extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const {
-      status: { data }
+      status: { data, error }
     } = nextProps;
     const { start, time, redCounter, intervals } = prevState;
 
-    if (data !== undefined && Object.keys(data).length > 0 && data.interval !== undefined && data.interval !== intervals) {
-      let flashing = false;
-      if (data.statusCode === 200) {
-        return {
-          greenOn: true,
-          redOn: false,
-          start: Date.now(),
-          flash: flashing,
-          redCounter: 0
-        };
-      } else if (data.statusCode !== 200) {
-        if (redCounter >= 3) {
-          if ((time - start) / 1000 > 120) {
-            flashing = true;
+    if(Object.keys(error).length > 0){
+      if(error.message === prevState.error){
+        return null;
+      }
+      return { error: error.message, disable: error.disable}
+    }
+
+    if (data !== undefined && prevState.url in data) {
+      console.log(data[prevState.url]);
+      if (data[prevState.url].interval !== intervals) {
+        let flashing = false;
+        if (data[prevState.url].statusCode === 200) {
+          console.log("green on");
+          return {
+            greenOn: true,
+            redOn: false,
+            start: Date.now(),
+            flash: flashing,
+            redCounter: 0
+          };
+        } else if (data[prevState.url].statusCode !== 200) {
+          if (redCounter >= 3) {
+            if ((time - start) / 1000 > 120) {
+              flashing = true;
+            }
+            return {
+              greenOn: false,
+              redOn: true,
+              redCounter: redCounter + 1,
+              flash: flashing
+            };
+          } else {
+            console.log("redOn");
+            return {
+              greenOn: false,
+              redOn: true,
+              redCounter: redCounter + 1,
+              flash: flashing
+            };
           }
-          return {
-            greenOn: false,
-            redOn: true,
-            redCounter: redCounter + 1,
-            flash: flashing
-          };
-        } else {
-          return {
-            greenOn: false,
-            redOn: true,
-            redCounter: redCounter + 1,
-            flash: flashing
-          };
         }
       }
     }
@@ -84,13 +98,14 @@ class TrafficLightContainer extends Component {
   }
 
   render() {
+    const { redOn, greenOn, flash, time } = this.state;
     return (
       <TrafficLight
         Size={50}
-        RedOn={this.state.redOn}
-        GreenOn={this.state.greenOn}
-        flash={this.state.flash}
-        time={this.state.time}
+        RedOn={redOn}
+        GreenOn={greenOn}
+        flash={flash}
+        time={time}
       />
     );
   }
