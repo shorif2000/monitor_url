@@ -4,7 +4,7 @@ export const LOAD_URL_STATUS = "LOAD_URL_STATUS";
 export const ERROR = "ERROR";
 
 export function loadUrlStatus(url, interval) {
-  const checkUrl = `http://52.56.180.211:9010/health/${url.replace(
+  const checkUrl = `https://g1rsn.sse.codesandbox.io/health/${url.replace(
     /^https?:\/\//i,
     ""
   )}`;
