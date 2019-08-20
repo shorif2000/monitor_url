@@ -3,6 +3,7 @@
 creds.js
 
 # dependencies
+build
 /node_modules
 /client/node_modules
 /api/node_modules
