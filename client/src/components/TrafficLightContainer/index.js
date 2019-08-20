@@ -50,14 +50,14 @@ class TrafficLightContainer extends Component {
       status: { data, error }
     } = nextProps;
     const { start, time, redCounter, intervals } = prevState;
-
+/*
     if(Object.keys(error).length > 0){
       if(error.message === prevState.error){
         return null;
       }
       return { error: error.message, disable: error.disable}
     }
-
+*/
     if (data !== undefined && prevState.url in data) {
       console.log(data[prevState.url]);
       if (data[prevState.url].interval !== intervals) {
@@ -99,6 +99,7 @@ class TrafficLightContainer extends Component {
 
   render() {
     const { redOn, greenOn, flash, time } = this.state;
+	  console.log(redOn, greenOn, flash, time)
     return (
       <TrafficLight
         Size={50}
