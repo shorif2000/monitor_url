@@ -19,7 +19,7 @@ Start front end client
 
 `cd CLONED/client; npmi;`
 
-Update ip address from `52.56.180.211` to appropiate
+Update ip address from `52.56.180.211` to appropiate also in client/src/actions/status/index.js as sandox ip was used for testing
 
 `npm run start`
 
