@@ -34,6 +34,9 @@ Some basic tests added on api
 
 Available here. may not always be online. http://52.56.180.211:3002/
 
+Few limitations on development environment. api can be accessed here https://g1rsn.sse.codesandbox.io
+
+
 
 ## Available Scripts
 
