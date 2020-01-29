@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Assumptions
+## Assumptions
 
 protocol and ports is not supported
 basic hostname with no parameters
